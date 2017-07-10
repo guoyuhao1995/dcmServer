@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="ALL" monitorInterval="1800">
+
+	<Properties>
+		<property name="LOG_HOME">/data/putaocloud</property>
+		<property name="LOG_PATTERN">%date{yyyy-MM-dd HH:mm:ss} %level [%thread][%file:%line] - %msg%n</property>
+	</Properties>
+
+	<Appenders>
+
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss} %level [%thread][%file:%line] - %msg%n" />
+		</Console>
+
+		<!-- 系统默认info日志 -->
+		<RollingRandomAccessFile name="info-log" fileName="${LOG_HOME}/info.log" filePattern="${LOG_HOME}/info.%d{yyyy-MM-dd-HH}.log">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+		</RollingRandomAccessFile>
+
+		<!-- 默认error日志 -->
+		<RollingRandomAccessFile name="error-log" fileName="${LOG_HOME}/error.log" filePattern="${LOG_HOME}/error.%d{yyyy-MM-dd-HH}.log">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+		</RollingRandomAccessFile>
+
+		<!-- 默认debug日志 -->
+		<RollingRandomAccessFile name="debug-log" fileName="${LOG_HOME}/debug.log" filePattern="${LOG_HOME}/debug.%d{yyyy-MM-dd-HH}.log">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+		</RollingRandomAccessFile>
+
+		<!-- 记录请求执行时间日志 -->
+		<RollingRandomAccessFile name="requestTime-log" fileName="${LOG_HOME}/requestTime.log" filePattern="${LOG_HOME}/requestTime.%d{yyyy-MM-dd-HH}.log">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+		</RollingRandomAccessFile>
+
+		<!-- 证书下载日志 -->
+		<RollingRandomAccessFile name="authUploadRecord-log" fileName="${LOG_HOME}/authUploadRecord.log" filePattern="${LOG_HOME}/authUploadRecord.%d{yyyy-MM-dd-HH}.log">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+		</RollingRandomAccessFile>
+
+	</Appenders>
+
+	<Loggers>
+		<Root level="info">
+			<Appender-ref ref="Console" />
+		</Root>
+		<!-- 默认debug日志 -->
+		<Logger name="debug" level="debug" additivity="true">
+			<AppenderRef ref="debug-log" />
+		</Logger>
+		<!--默认info日志 -->
+		<Logger name="info" level="info" additivity="true">
+			<AppenderRef ref="info-log" />
+		</Logger>
+		<!--默认error日志 -->
+		<Logger name="error" level="error" additivity="true">
+			<AppenderRef ref="error-log" />
+		</Logger>
+		<!-- 记录请求执行时间日志,需要打印日志时，应将其调整为debug级别 -->
+		<Logger name="request.time" level="info" additivity="true">
+			<AppenderRef ref="requestTime-log" />
+		</Logger>
+		<!-- 证书下载日志,记录证书下载信息 -->
+		<Logger name="authUpload.record" level="info" additivity="true">
+			<AppenderRef ref="authUploadRecord-log" />
+		</Logger>
+
+	</Loggers>
+
+</Configuration>  

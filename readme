@@ -1,0 +1,6 @@
+一.config.properties配置文件说明
+　　1.SERVER_PATH : 是后台接口服务地址. 如：http://123.57.149.211:8080/shikang/
+    2.DCM_SERVER_URL : 是监听本地服务ip,即本机在局域网中的ip。如：192.169.177.136 不可以为localhost或127.0.0.1
+    3.DCM_SERVER_PORT : 是监听本地服务端口。如：10400(与设备发送dicom软件sendData端口一致)
+    4.DEFAULT_STORAGE_DIRECTORY　:　是服务接收到dicom文件后保存的位置。如: /opt/dcm/
+    5.MEC_ID :　是体检中心编号， 与后台管理添加的体检中心编号保持一致。如：testtjzx

@@ -1,0 +1,125 @@
+drop table if exists sys_resource;
+
+drop table if exists sys_role;
+
+drop table if exists sys_role_resource;
+
+drop table if exists sys_user;
+
+drop table if exists vision_image;
+
+drop table if exists vision_patient_report;
+
+/*==============================================================*/
+/* Table: sys_resource                                          */
+/*==============================================================*/
+create table sys_resource
+(
+   id                   int(11) not null auto_increment comment '资源id',
+   name                 varchar(255) comment '资源名称',
+   url                  varchar(255) comment '地址',
+   pid                  int(11) comment '父节点',
+   status               tinyint(11) comment '状态(0禁用，1使用)',
+   icon                 varchar(255) comment '图标',
+   primary key (id)
+);
+
+alter table sys_resource comment '资源表';
+
+/*==============================================================*/
+/* Table: sys_role                                              */
+/*==============================================================*/
+create table sys_role
+(
+   id                   int(11) not null auto_increment comment '角色id',
+   name                 varchar(255) comment '角色名',
+   create_time          datetime comment '创建时间',
+   status               tinyint(2) comment '状态0:禁用1:使用 默认使用1',
+   primary key (id)
+);
+
+alter table sys_role comment '系统角色表';
+
+/*==============================================================*/
+/* Table: sys_role_resource                                     */
+/*==============================================================*/
+create table sys_role_resource
+(
+   id                   int(11) not null auto_increment,
+   role_id              int(11),
+   resource_id          int(11),
+   primary key (id)
+);
+
+alter table sys_role_resource comment '角色资源表';
+
+/*==============================================================*/
+/* Table: sys_user                                              */
+/*==============================================================*/
+create table sys_user
+(
+   id                   int(11) not null auto_increment comment '主键',
+   name                 varchar(255) comment '姓名',
+   user_name            varchar(255) comment '用户名',
+   password             varchar(255) comment '密码',
+   create_time          datetime comment '创建时间',
+   status               tinyint(2) comment '状态(0停用，1正常)',
+   mec_no               int(11) comment '体检中心编号',
+   info                 varchar(255) comment '账号说明',
+   role_id              int(11) comment '角色id',
+   primary key (id)
+);
+
+alter table sys_user comment '登录用户';
+
+/*==============================================================*/
+/* Table: vision_image                                          */
+/*==============================================================*/
+create table vision_image
+(
+   id                   bigint(20) not null auto_increment comment '主键',
+   which                tinyint(2) comment '哪只眼(1左眼 2右眼 3不确定)',
+   if_normal            tinyint(2) comment '是否正常(1正常, 0不正常)',
+   cd                   float(3,1) comment 'C/D',
+   plate_form           tinyint(2) comment '盘沿形式(1可 2上方偏窄 3下方偏窄 4上下方偏窄 5看不清)',
+   av                   tinyint(2) comment 'A/V值(1尚可 2.1:2 3.1:3 4看不清)',
+   macular_region_bleeding tinyint(2) comment '黄斑区出血(1未见明显 2可见 3看不清)',
+   macular_region_exudation tinyint(2) comment '黄斑区渗出(1未见明显 2可见 3看不清)',
+   retina_region_bleeding tinyint(2) comment '周边视网膜出血(1未见明显 2可见 3看不清)',
+   retina_region_exudation tinyint(2) comment '周边视网膜渗出(1未见明显 2可见 3看不清)',
+   other                tinyint(2) comment '其他',
+   primary key (id)
+);
+
+alter table vision_image comment '眼睛影像描述';
+
+/*==============================================================*/
+/* Table: vision_patient_report                                 */
+/*==============================================================*/
+create table vision_patient_report
+(
+   id                   bigint(20) not null auto_increment comment '主键',
+   pat_no               varchar(255) comment '患者编号',
+   name                 varchar(255) comment '患者姓名',
+   sex                  varchar(255) comment '性别',
+   age                  int(3) comment '年龄',
+   iop_left             varchar(255) comment '眼压（左）',
+   iop_right            varchar(255) comment '眼压（右）',
+   vision_left          varchar(255) comment '视力（左）',
+   vision_right         varchar(255) comment '视力（右）',
+   corrected_left       varchar(255) comment '矫正视力（左）',
+   corrected_right      varchar(255) comment '矫正视力（右）',
+   is_transfer          tinyint(2) comment '是否转诊',
+   impression           varchar(255) comment '印象(多个逗号分隔)',
+   suggest              varchar(255) comment '建议',
+   image                varchar(255) comment '影像逗号分隔',
+   screen_time          datetime comment '筛查日期',
+   upload_time          datetime comment '上传日期',
+   url                  varchar(255) comment '二维码',
+   screen_status        tinyint(2) comment '筛查状态(0待筛选 1已筛选)',
+   doctor_id            int(11) comment '筛查医生ID',
+   mec_id               int(11) comment '体检中心ID',
+   primary key (id)
+);
+
+alter table vision_patient_report comment '患者眼底筛查报告';

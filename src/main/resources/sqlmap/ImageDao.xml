@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryork.vision.manage.dao.ImageDao">
+
+	<resultMap id="BaseResultMap" type="com.dryork.vision.manage.po.Image">
+		<result column="id" property="id" />
+		<result column="which" property="which" />
+		<result column="if_normal" property="ifNormal" />
+		<result column="cd" property="cd" />
+		<result column="plate_form" property="plateForm" />
+		<result column="av" property="av" />
+		<result column="macular_region_bleeding" property="macularRegionBleeding" />
+		<result column="macular_region_exudation" property="macularRegionExudation" />
+		<result column="retina_region_bleeding" property="retinaRegionBleeding" />
+		<result column="retina_region_exudation" property="retinaRegionExudation" />
+		<result column="other" property="other" />
+		<result column="url" property="url" />
+	</resultMap>
+
+	<select id="find" resultMap="BaseResultMap" parameterType="java.io.Serializable">
+		select id, which, if_normal, cd, plate_form, av, macular_region_bleeding, macular_region_exudation, retina_region_bleeding, retina_region_exudation, other,url
+		from vision_image
+		where
+		id = #{id}
+	</select>
+
+	<select id="findAll" resultMap="BaseResultMap">
+		select id, which, if_normal, cd, plate_form, av, macular_region_bleeding, macular_region_exudation, retina_region_bleeding, retina_region_exudation, other,url
+		from vision_image
+	</select>
+
+	<delete id="delete" parameterType="java.io.Serializable">
+		delete from vision_image
+		where
+		id = #{id}
+	</delete>
+
+	<delete id="deleteAll">
+		delete from vision_image
+	</delete>
+
+	<insert id="create" parameterType="com.dryork.vision.manage.po.Image" useGeneratedKeys="true" keyProperty="id">
+		insert into vision_image (which, if_normal, cd, plate_form, av, macular_region_bleeding, macular_region_exudation, retina_region_bleeding, retina_region_exudation, other,url)
+		values (
+		#{which, javaType=Integer, jdbcType=INTEGER},
+		#{ifNormal, javaType=Integer, jdbcType=INTEGER},
+		#{cd, javaType=float, jdbcType=FLOAT},
+		#{plateForm, javaType=Integer, jdbcType=INTEGER},
+		#{av, javaType=Integer, jdbcType=INTEGER},
+		#{macularRegionBleeding, javaType=Integer, jdbcType=INTEGER},
+		#{macularRegionExudation, javaType=Integer, jdbcType=INTEGER},
+		#{retinaRegionBleeding, javaType=Integer, jdbcType=INTEGER},
+		#{retinaRegionExudation, javaType=Integer, jdbcType=INTEGER},
+		#{other, javaType=String, jdbcType=VARCHAR},
+		#{url, javaType=String, jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.dryork.vision.manage.po.Image">
+		update vision_image
+		set
+		which = #{which, javaType=Integer, jdbcType=INTEGER},
+		if_normal = #{ifNormal, javaType=Integer, jdbcType=INTEGER},
+		cd = #{cd, javaType=float, jdbcType=FLOAT},
+		plate_form = #{plateForm, javaType=Integer, jdbcType=INTEGER},
+		av = #{av, javaType=Integer, jdbcType=INTEGER},
+		macular_region_bleeding = #{macularRegionBleeding, javaType=Integer, jdbcType=INTEGER},
+		macular_region_exudation = #{macularRegionExudation, javaType=Integer, jdbcType=INTEGER},
+		retina_region_bleeding = #{retinaRegionBleeding, javaType=Integer, jdbcType=INTEGER},
+		retina_region_exudation = #{retinaRegionExudation, javaType=Integer, jdbcType=INTEGER},
+		other = #{other, javaType=String, jdbcType=VARCHAR},
+		url = #{url, javaType=String, jdbcType=VARCHAR}
+		where
+		id = #{id}
+	</update>
+
+	<!--codegen -->
+
+</mapper>

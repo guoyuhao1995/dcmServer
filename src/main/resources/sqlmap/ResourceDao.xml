@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryork.vision.manage.dao.ResourceDao">
+
+	<resultMap id="BaseResultMap" type="com.dryork.vision.manage.po.Resource">
+		<result column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="url" property="url" />
+		<result column="pid" property="pid" />
+		<result column="status" property="status" />
+		<result column="icon" property="icon" />
+	</resultMap>
+
+	<select id="find" resultMap="BaseResultMap" parameterType="java.io.Serializable">
+		select id, name, url, pid, status, icon
+		from sys_resource
+		where
+		id = #{id}
+	</select>
+
+	<select id="findAll" resultMap="BaseResultMap">
+		select id, name, url, pid, status, icon
+		from sys_resource
+	</select>
+
+	<delete id="delete" parameterType="java.io.Serializable">
+		delete from sys_resource
+		where
+		id = #{id}
+	</delete>
+
+	<delete id="deleteAll">
+		delete from sys_resource
+	</delete>
+
+	<insert id="create" parameterType="com.dryork.vision.manage.po.Resource">
+		insert into sys_resource (name, url, pid, status, icon)
+		values (
+		#{name, javaType=String, jdbcType=VARCHAR},
+		#{url, javaType=String, jdbcType=VARCHAR},
+		#{pid, javaType=Integer, jdbcType=INTEGER},
+		#{status, javaType=Integer, jdbcType=INTEGER},
+		#{icon, javaType=String, jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.dryork.vision.manage.po.Resource">
+		update sys_resource
+		set
+		name = #{name, javaType=String, jdbcType=VARCHAR},
+		url = #{url, javaType=String, jdbcType=VARCHAR},
+		pid = #{pid, javaType=Integer, jdbcType=INTEGER},
+		status = #{status, javaType=Integer, jdbcType=INTEGER},
+		icon = #{icon, javaType=String, jdbcType=VARCHAR}
+		where
+		id = #{id}
+	</update>
+
+	<!--codegen -->
+	
+	<select id="getResourcesByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT DISTINCT a.*
+		FROM sys_resource a
+		LEFT JOIN sys_role_resource b ON a.`id`=b.`resource_id`
+		LEFT JOIN sys_role c ON b.`role_id` = c.`id`
+		LEFT JOIN sys_user d ON c.`id` = d.role_id
+		WHERE d.id = #{userId}
+	</select>
+
+</mapper>

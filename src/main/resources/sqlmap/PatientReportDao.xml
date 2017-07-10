@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryork.vision.manage.dao.PatientReportDao">
+
+	<resultMap id="BaseResultMap" type="com.dryork.vision.manage.po.PatientReport">
+		<result column="id" property="id" />
+		<result column="pat_no" property="patNo" />
+		<result column="name" property="name" />
+		<result column="sex" property="sex" />
+		<result column="age" property="age" />
+		<result column="iop_left" property="iopLeft" />
+		<result column="iop_right" property="iopRight" />
+		<result column="vision_left" property="visionLeft" />
+		<result column="vision_right" property="visionRight" />
+		<result column="corrected_left" property="correctedLeft" />
+		<result column="corrected_right" property="correctedRight" />
+		<result column="is_transfer" property="isTransfer" />
+		<result column="impression" property="impression" />
+		<result column="suggest" property="suggest" />
+		<result column="image" property="image" />
+		<result column="screen_time" property="screenTime" />
+		<result column="upload_time" property="uploadTime" />
+		<result column="url" property="url" />
+		<result column="screen_status" property="screenStatus" />
+		<result column="doctor_id" property="doctorId" />
+		<result column="mec_id" property="mecId" />
+	</resultMap>
+	
+	<resultMap id="BaseResultMapView" type="com.dryork.vision.manage.pojo.PatientReportView">
+		<result column="screenTime" property="screenTime" />
+		<result column="num" property="num" />
+		<result column="uploadTime" property="uploadTime" />
+	</resultMap>
+	
+	
+	
+	<sql id="Limit_Clause">
+		<if test="limitStart != null and limitCount != null" >
+		  limit ${limitStart}, ${limitCount}
+		</if>
+	</sql>
+	<sql id="OrderBy_Clause">
+		<if test="sqlSort != null" >
+		  order by ${sqlSort}
+		</if>
+	</sql>
+	<sql id="Base_Column_List" >
+	    id, pat_no, name, sex, age, iop_left, iop_right, vision_left, vision_right, corrected_left, corrected_right, is_transfer, impression, suggest, image, screen_time, upload_time, url, screen_status, doctor_id, mec_id
+  	</sql>
+  	
+  	<sql id="Where_Clause" >
+		<where>
+			<if test="id != null" >
+			  and id = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="patNo != null" >
+			  and pat_no like CONCAT('%',#{patNo},'%')
+			</if>
+			<if test="name != null" >
+			  and name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="sex != null" >
+			  and sex = #{sex,jdbcType=VARCHAR}
+			</if>
+			<if test="age != null" >
+			  and age = #{age,jdbcType=INTEGER}
+			</if>
+			<if test="iopLeft != null" >
+			  and iop_left = #{iopLeft,jdbcType=VARCHAR}
+			</if>
+			<if test="iopRight != null" >
+			  and iop_right = #{iopRight,jdbcType=VARCHAR}
+			</if>
+			<if test="visionLeft != null" >
+			  and vision_left = #{visionLeft,jdbcType=VARCHAR}
+			</if>
+			<if test="visionRight != null" >
+			  and vision_right = #{visionRight,jdbcType=VARCHAR}
+			</if>
+			<if test="correctedLeft != null" >
+			  and corrected_left = #{correctedLeft,jdbcType=VARCHAR}
+			</if>
+			<if test="correctedRight != null" >
+			  and corrected_right = #{correctedRight,jdbcType=VARCHAR}
+			</if>
+			<if test="isTransfer != null" >
+			  and is_transfer = #{isTransfer,jdbcType=INTEGER}
+			</if>
+			<if test="impression != null" >
+			  and impression = #{impression,jdbcType=VARCHAR}
+			</if>
+			<if test="suggest != null" >
+			  and suggest = #{suggest,jdbcType=VARCHAR}
+			</if>
+			<if test="image != null" >
+			  and image = #{image,jdbcType=VARCHAR}
+			</if>
+			<if test="screenTime != null" >
+			  and screen_time = #{screenTime,jdbcType=DATETIME}
+			</if>
+			<if test="uploadTime != null" >
+			  and upload_time = #{uploadTime,jdbcType=DATETIME}
+			</if>
+			<if test="url != null" >
+			  and url = #{url,jdbcType=VARCHAR}
+			</if>
+			<if test="screenStatus != null" >
+			  and screen_status = #{screenStatus,jdbcType=INTEGER}
+			</if>
+			<if test="doctorId != null" >
+			  and doctor_id = #{doctorId,jdbcType=INTEGER}
+			</if>
+			<if test="mecId != null" >
+			  and mec_id = #{mecId,jdbcType=VARCHAR}
+			</if>
+			<if test="sqlStr !=null">
+			  ${sqlStr}
+			</if>
+		</where>
+	</sql>
+
+	<select id="find" resultMap="BaseResultMap" parameterType="java.io.Serializable">
+		select id, pat_no, name, sex, age, iop_left, iop_right, vision_left, vision_right, corrected_left, corrected_right, is_transfer, impression, suggest, image, screen_time, upload_time, url, screen_status, doctor_id, mec_id
+		from vision_patient_report
+		where
+		id = #{id}
+	</select>
+
+	<select id="findAll" resultMap="BaseResultMap">
+		select id, pat_no, name, sex, age, iop_left, iop_right, vision_left, vision_right, corrected_left, corrected_right, is_transfer, impression, suggest, image, screen_time, upload_time, url, screen_status, doctor_id, mec_id
+		from vision_patient_report
+	</select>
+
+	<delete id="delete" parameterType="java.io.Serializable">
+		delete from vision_patient_report
+		where
+		id = #{id}
+	</delete>
+
+	<delete id="deleteAll">
+		delete from vision_patient_report
+	</delete>
+
+	<insert id="create" parameterType="com.dryork.vision.manage.po.PatientReport">
+		insert into vision_patient_report (pat_no, name, sex, age, iop_left, iop_right, vision_left, vision_right, corrected_left, corrected_right, is_transfer, impression, suggest, image, screen_time, upload_time, url, screen_status, doctor_id, mec_id)
+		values (
+		#{patNo, javaType=String, jdbcType=VARCHAR},
+		#{name, javaType=String, jdbcType=VARCHAR},
+		#{sex, javaType=String, jdbcType=VARCHAR},
+		#{age, javaType=Integer, jdbcType=INTEGER},
+		#{iopLeft, javaType=String, jdbcType=VARCHAR},
+		#{iopRight, javaType=String, jdbcType=VARCHAR},
+		#{visionLeft, javaType=String, jdbcType=VARCHAR},
+		#{visionRight, javaType=String, jdbcType=VARCHAR},
+		#{correctedLeft, javaType=String, jdbcType=VARCHAR},
+		#{correctedRight, javaType=String, jdbcType=VARCHAR},
+		#{isTransfer, javaType=Integer, jdbcType=INTEGER},
+		#{impression, javaType=String, jdbcType=VARCHAR},
+		#{suggest, javaType=String, jdbcType=VARCHAR},
+		#{image, javaType=String, jdbcType=VARCHAR},
+		#{screenTime, javaType=Date, jdbcType=TIMESTAMP},
+		#{uploadTime, javaType=Date, jdbcType=TIMESTAMP},
+		#{url, javaType=String, jdbcType=VARCHAR},
+		#{screenStatus, javaType=Integer, jdbcType=INTEGER},
+		#{doctorId, javaType=Integer, jdbcType=INTEGER},
+		#{mecId, javaType=String, jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.dryork.vision.manage.po.PatientReport">
+		update vision_patient_report
+		set
+		pat_no = #{patNo, javaType=String, jdbcType=VARCHAR},
+		name = #{name, javaType=String, jdbcType=VARCHAR},
+		sex = #{sex, javaType=String, jdbcType=VARCHAR},
+		age = #{age, javaType=Integer, jdbcType=INTEGER},
+		iop_left = #{iopLeft, javaType=String, jdbcType=VARCHAR},
+		iop_right = #{iopRight, javaType=String, jdbcType=VARCHAR},
+		vision_left = #{visionLeft, javaType=String, jdbcType=VARCHAR},
+		vision_right = #{visionRight, javaType=String, jdbcType=VARCHAR},
+		corrected_left = #{correctedLeft, javaType=String, jdbcType=VARCHAR},
+		corrected_right = #{correctedRight, javaType=String, jdbcType=VARCHAR},
+		is_transfer = #{isTransfer, javaType=Integer, jdbcType=INTEGER},
+		impression = #{impression, javaType=String, jdbcType=VARCHAR},
+		suggest = #{suggest, javaType=String, jdbcType=VARCHAR},
+		image = #{image, javaType=String, jdbcType=VARCHAR},
+		screen_time = #{screenTime, javaType=Date, jdbcType=TIMESTAMP},
+		upload_time = #{uploadTime, javaType=Date, jdbcType=TIMESTAMP},
+		url = #{url, javaType=String, jdbcType=VARCHAR},
+		screen_status = #{screenStatus, javaType=Integer, jdbcType=INTEGER},
+		doctor_id = #{doctorId, javaType=Integer, jdbcType=INTEGER},
+		mec_id = #{mecId, javaType=String, jdbcType=VARCHAR}
+		where
+		id = #{id}
+	</update>
+	
+	<select id="selectByRecord" parameterType="com.dryork.vision.manage.po.PatientReport"  resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from vision_patient_report <include refid="Where_Clause" /> <include refid="OrderBy_Clause" /> <include refid="Limit_Clause" />
+	</select>
+	
+	<select id="selectCount" parameterType="com.dryork.vision.manage.po.PatientReport" resultType="java.lang.Integer">
+		select count(id) from vision_patient_report <include refid="Where_Clause" /> 
+	</select>
+	
+	<select id="selectViewByRecord" parameterType="com.dryork.vision.manage.po.PatientReport"  resultMap="BaseResultMapView">
+		SELECT 
+		   distinct(DATE_FORMAT(doc.screen_time, '%Y-%m-%d')) AS screenTime
+		FROM  
+           vision_patient_report doc  
+       <include refid="Where_Clause" />
+		<include refid="OrderBy_Clause" /> <include refid="Limit_Clause" />
+	</select>
+	
+	<select id="selectMecViewByRecord" parameterType="com.dryork.vision.manage.po.PatientReport"  resultMap="BaseResultMapView">
+		SELECT  
+		   distinct(DATE_FORMAT(doc.upload_time, '%Y-%m-%d')) AS uploadTime 
+		FROM  
+		    vision_patient_report doc  
+		<include refid="Where_Clause" />
+		<include refid="OrderBy_Clause" /> <include refid="Limit_Clause" />
+	</select>
+	<!--codegen -->
+
+</mapper>

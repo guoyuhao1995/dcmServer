@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryork.vision.manage.dao.RoleDao">
+
+	<resultMap id="BaseResultMap" type="com.dryork.vision.manage.po.Role">
+		<result column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="create_time" property="createTime" />
+		<result column="status" property="status" />
+	</resultMap>
+
+	<select id="find" resultMap="BaseResultMap" parameterType="java.io.Serializable">
+		select id, name, create_time, status
+		from sys_role
+		where
+		id = #{id}
+	</select>
+
+	<select id="findAll" resultMap="BaseResultMap">
+		select id, name, create_time, status
+		from sys_role
+	</select>
+
+	<delete id="delete" parameterType="java.io.Serializable">
+		delete from sys_role
+		where
+		id = #{id}
+	</delete>
+
+	<delete id="deleteAll">
+		delete from sys_role
+	</delete>
+
+	<insert id="create" parameterType="com.dryork.vision.manage.po.Role">
+
+		insert into sys_role (name, create_time, status)
+		values (
+		#{name, javaType=String, jdbcType=VARCHAR},
+		#{createTime, javaType=Date, jdbcType=TIMESTAMP},
+		#{status, javaType=Integer, jdbcType=INTEGER}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.dryork.vision.manage.po.Role">
+		update sys_role
+		set
+		name = #{name, javaType=String, jdbcType=VARCHAR},
+		create_time = #{createTime, javaType=Date, jdbcType=TIMESTAMP},
+		status = #{status, javaType=Integer, jdbcType=INTEGER}
+		where
+		id = #{id}
+	</update>
+
+	<!--codegen -->
+
+</mapper>

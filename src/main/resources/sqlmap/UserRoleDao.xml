@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryork.vision.manage.dao.UserRoleDao">
+
+	<resultMap id="BaseResultMap" type="com.dryork.vision.manage.po.UserRole">
+		<result column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="role_id" property="roleId" />
+	</resultMap>
+
+	<select id="find" resultMap="BaseResultMap" parameterType="java.io.Serializable">
+		select id, user_id, role_id
+		from sys_user_role
+		where
+		id = #{id}
+	</select>
+
+	<select id="findAll" resultMap="BaseResultMap">
+		select id, user_id, role_id
+		from sys_user_role
+	</select>
+
+	<delete id="delete" parameterType="java.io.Serializable">
+		delete from sys_user_role
+		where
+		id = #{id}
+	</delete>
+
+	<delete id="deleteAll">
+		delete from sys_user_role
+	</delete>
+
+	<insert id="create" parameterType="com.dryork.vision.manage.po.UserRole">
+		insert into sys_user_role (user_id, role_id)
+		values (
+		#{userId, javaType=Integer, jdbcType=INTEGER},
+		#{roleId, javaType=Integer, jdbcType=INTEGER}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.dryork.vision.manage.po.UserRole">
+		update sys_user_role
+		set
+		user_id = #{userId, javaType=Integer, jdbcType=INTEGER},
+		role_id = #{roleId, javaType=Integer, jdbcType=INTEGER}
+		where
+		id = #{id}
+	</update>
+
+	<!--codegen -->
+
+</mapper>

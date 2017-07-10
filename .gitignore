@@ -1,0 +1,11 @@
+bin/
+*.class
+.settings/
+.git_bak/
+.project
+.classpath
+target/
+classes/
+/build/
+
+

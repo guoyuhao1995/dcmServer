@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE configuration PUBLIC "-/mybatis.org//DTD Config 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="logImpl" value="LOG4J2" />
+	</settings>
+	<typeAliases>
+		<typeAlias alias="hashmap" type="java.util.HashMap" />
+		<typeAlias alias="String" type="java.lang.String" />
+		<typeAlias alias="Integer" type="java.lang.Integer" />
+	</typeAliases>
+	<!-- mybatis拦截器分页 -->
+	<plugins>
+		<plugin interceptor="com.dryork.vision.base.pageutil.PageInterceptor">
+		</plugin>
+	</plugins>
+
+</configuration>

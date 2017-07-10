@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dryork.vision.manage.dao.UserDao">
+
+	<resultMap id="BaseResultMap" type="com.dryork.vision.manage.po.User">
+		<result column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="user_name" property="userName" />
+		<result column="password" property="password" />
+		<result column="create_time" property="createTime" />
+		<result column="status" property="status" />
+		<result column="mec_no" property="mecNo" />
+		<result column="info" property="info" />
+		<result column="role_id" property="roleId" />
+		<result column="screenCount" property="screenCount" />
+		<result column="noScreenCount" property="noScreenCount" />
+	</resultMap>
+
+	<select id="find" resultMap="BaseResultMap" parameterType="java.io.Serializable">
+		select id, name, user_name, password, create_time, status, mec_no, info, role_id
+		from sys_user
+		where
+		id = #{id}
+	</select>
+
+	<select id="findAll" resultMap="BaseResultMap">
+		select id, name, user_name, password, create_time, status, mec_no, info, role_id
+		from sys_user
+	</select>
+
+	<delete id="delete" parameterType="java.io.Serializable">
+		delete from sys_user
+		where
+		id = #{id}
+	</delete>
+
+	<delete id="deleteAll">
+		delete from sys_user
+	</delete>
+
+	<insert id="create" parameterType="com.dryork.vision.manage.po.User">
+		insert into sys_user (name, user_name, password, create_time, status, mec_no, info, role_id)
+		values (
+		#{name, javaType=String, jdbcType=VARCHAR},
+		#{userName, javaType=String, jdbcType=VARCHAR},
+		#{password, javaType=String, jdbcType=VARCHAR},
+		now(),
+		#{status, javaType=Integer, jdbcType=INTEGER},
+		#{mecNo, javaType=String, jdbcType=VARCHAR},
+		#{info},
+		#{roleId}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.dryork.vision.manage.po.User">
+		update sys_user
+		set
+		name = #{name, javaType=String, jdbcType=VARCHAR},
+		user_name = #{userName, javaType=String, jdbcType=VARCHAR},
+		password = #{password, javaType=String, jdbcType=VARCHAR},
+		create_time = #{createTime, javaType=Date, jdbcType=TIMESTAMP},
+		status = #{status, javaType=Integer, jdbcType=INTEGER},
+		mec_no = #{mecNo, javaType=String, jdbcType=VARCHAR},
+		info = #{info, javaType=String, jdbcType=VARCHAR},
+		role_id = #{roleId}
+		where
+		id = #{id}
+	</update>
+
+	<!--codegen -->
+
+	<select id="selectOne" resultMap="BaseResultMap" parameterType="com.dryork.vision.manage.po.User">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user
+		<include refid="Where_Clause" />
+	</select>
+
+	<select id="selectList" resultMap="BaseResultMap" parameterType="com.dryork.vision.manage.po.User">
+		SELECT a.*, (SELECT COUNT(1) FROM vision_patient_report b WHERE b.screen_status = 1 AND b.mec_id = a.id) screenCount,
+		(SELECT COUNT(1) FROM vision_patient_report b WHERE b.screen_status = 0 AND b.mec_id = a.id) noScreenCount
+		FROM sys_user a
+		<include refid="Where_Clause" />
+		<include refid="OrderBy_Clause" />
+		<include refid="Limit_Clause" />
+	</select>
+
+	<select id="userCount" resultType="java.lang.Integer" parameterType="com.dryork.vision.manage.po.User">
+		select
+		count(1)
+		from sys_user
+		<include refid="Where_Clause" />
+	</select>
+
+	<!-- common -->
+	<sql id="Base_Column_List">
+		id, name, user_name, password, create_time, status, mec_no, info, role_id
+	</sql>
+	<sql id="Where_Clause">
+		<where>
+			<if test="id != null">
+				and id = #{id}
+			</if>
+			<if test="name != null">
+				and name = #{name}
+			</if>
+			<if test="userName != null">
+				and user_name = #{userName}
+			</if>
+			<if test="password != null">
+				and password = #{password}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="mecNo != null">
+				and mec_no = #{mecNo}
+			</if>
+			<if test="info != null">
+				and info = #{info}
+			</if>
+			<if test="roleId != null">
+				and role_id = #{roleId}
+			</if>
+			<if test="sqlStr !=null">
+				${sqlStr}
+			</if>
+		</where>
+	</sql>
+	<sql id="OrderBy_Clause">
+		<if test="sqlSort != null">
+			order by ${sqlSort}
+		</if>
+	</sql>
+	<sql id="Limit_Clause">
+		<if test="limitStart != null and limitCount != null">
+			limit ${limitStart}, ${limitCount}
+		</if>
+	</sql>
+
+</mapper>
